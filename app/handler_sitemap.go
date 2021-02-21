@@ -3,7 +3,6 @@ package app
 import (
 	"fmt"
 	"net/http"
-	"os"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/snabb/sitemap"
@@ -21,7 +20,7 @@ func sitemapHandler(w http.ResponseWriter, r *http.Request) {
 	sm := sitemap.New()
 	for _, content := range contents {
 		sm.Add(&sitemap.URL{
-			Loc:        fmt.Sprintf("https://%s/%s", os.Getenv("DOMAIN"), content.Slug),
+			Loc:        fmt.Sprintf("https://%s/%s", app.Domain, content.Slug),
 			LastMod:    &content.UpdatedAt,
 			ChangeFreq: sitemap.Monthly,
 		})
