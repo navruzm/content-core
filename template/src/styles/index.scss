@@ -1,0 +1,151 @@
+@import 'breakpoints.scss';
+
+$text-color-dark:#2A2F36;
+$text-color:rgb(18, 20, 22);
+$hover-color:#dc5b5d;
+
+$blue:#0366d6;
+$red:#d73a49;
+$green:#28a745;
+$yellow:#ffd33d;
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  color: $text-color;
+  font-size: 18px;
+  font-size: calc(.9em + .3vw);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+  transition: color .2s;
+
+  &:hover {
+    color: $hover-color;
+  }
+}
+
+header,
+main,
+footer {
+  padding: .625em;
+
+  a {
+    color: $text-color-dark;
+  }
+
+  @include respond-to('medium') {
+    padding: 1em calc(34% - 15rem);
+  }
+
+  @include respond-to('large') {
+    padding: 1em calc(34% - 15rem);
+  }
+}
+
+main,
+footer {
+  border-top: 1px solid rgba(148, 148, 148, 0.12);
+}
+
+header,
+footer {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+header {
+  box-shadow: 0 0 1em rgba(40, 40, 40, 0.03);
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+}
+
+footer {
+  justify-content: center;
+  align-items: center;
+
+  a {
+    margin: 0 .5rem;
+    font-size: .9rem;
+  }
+}
+
+main {
+  background: rgba(148, 148, 148, 0.01);
+}
+
+.title {
+  margin: 0 0 .1rem;
+}
+
+.content {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.pagination {
+  display: flex;
+  margin-top: 1rem;
+
+  .prev,
+  .next {
+    display: flex;
+    background: #dc5b5d;
+    padding: .5rem 1rem;
+    border-radius: 2rem;
+    color: #fff;
+  }
+
+  .next {
+    margin-left: auto;
+  }
+}
+
+picture {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.list {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  // grid-gap: 1rem;
+
+  @include respond-to('medium') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to('large') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .item {
+    padding: 1em;
+    font-size: 1rem;
+    border: 1px solid #e9ecef;
+    margin-left: -1px;
+
+    h2 {
+      font-size: 1.375rem;
+      line-height: 1.3;
+      margin: 1rem 0;
+    }
+  }
+
+}
