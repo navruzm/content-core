@@ -89,7 +89,7 @@ func tempFuncs() template.FuncMap {
 			var html = fmt.Sprintf(`<picture>
 			    <source type="image/webp" media="(min-width: 36em)" srcset="/img/large-%s?f=webp 1024w, /img/medium-%s?f=webp 640w, /img/small-%s?f=webp 320w" sizes="33.3vw" />
 			    <source type="image/webp" srcset="/img/croppedlarge-%s?f=webp 2x, /img/croppedsmall-%s?f=webp 1x" />
-			    <img loading="lazy" src="/img/small-%s" alt="%s" />
+			    <img width="600" width="450" loading="lazy" src="/img/small-%s" alt="%s" />
 			 </picture>`, s, s, s, s, s, s, fp)
 			return template.HTML(html)
 		},

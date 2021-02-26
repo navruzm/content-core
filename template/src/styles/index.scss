@@ -121,6 +121,19 @@ picture {
   text-align: center;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+@include respond-to('medium') {
+  max-width: 80%;
+}
+
+@include respond-to('large') {
+  max-width: 60%;
+}
+
 .list {
   max-width: 1200px;
   margin: 0 auto;
