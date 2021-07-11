@@ -30,9 +30,16 @@ func getImage(w http.ResponseWriter, r *http.Request) {
 	case "medium":
 		options.Width = 640
 		options.Height = 480
+		options.Enlarge = true
 	case "small":
 		options.Width = 320
 		options.Height = 240
+		options.Enlarge = true
+	case "smallThumb":
+		options.Width = 320
+		options.Height = 240
+		options.Crop = true
+		options.Gravity = bimg.GravitySmart
 	case "croppedlarge":
 		options.Width = 192
 		options.Height = 192

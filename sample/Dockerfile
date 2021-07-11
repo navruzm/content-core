@@ -3,11 +3,11 @@ RUN apk add git make vips-dev fftw-dev build-base --no-cache \
         --repository http://dl-3.alpinelinux.org/alpine/edge/community \
         --repository http://dl-3.alpinelinux.org/alpine/edge/main
 # RUN apk add -U --no-cache ca-certificates
-RUN apk add --update nodejs yarn
+# RUN apk add --update nodejs yarn
 RUN mkdir /build
 ADD . /build/
 WORKDIR /build
-RUN yarn install && yarn build
+# RUN yarn install && yarn build
 RUN go mod download
 RUN GOOS=linux go build -o main ./sample
 FROM alpine
