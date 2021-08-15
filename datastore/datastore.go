@@ -3,6 +3,8 @@ package datastore
 import (
 	"embed"
 	"errors"
+	"fmt"
+	"sync"
 	"time"
 )
 
@@ -37,10 +39,21 @@ func NewContentStore(embeddedFiles embed.FS) (Datastore, error) {
 	if err != nil {
 		return nil, err
 	}
+	go func() {
+		ticker := time.NewTicker(time.Hour * 24)
+		for range ticker.C {
+			err := s.GenerateDatastore(embeddedFiles)
+			if err != nil {
+				fmt.Println(err)
+			}
+		}
+	}()
 	return &s, nil
 }
 
 type ContentStorer struct {
+	sync.RWMutex
+
 	embeddedFiles embed.FS
 	contents      []*Content
 	contentMap    map[string]*Content
@@ -52,6 +65,8 @@ type ContentStorer struct {
 }
 
 func (s *ContentStorer) ListPosts(page int) ([]*Content, error) {
+	s.RLock()
+	defer s.RUnlock()
 	size := 9
 	skip := (page * size) - size
 	total := s.TotalPosts()
@@ -66,10 +81,14 @@ func (s *ContentStorer) ListPosts(page int) ([]*Content, error) {
 }
 
 func (s *ContentStorer) TotalPosts() int {
+	s.RLock()
+	defer s.RUnlock()
 	return len(s.contents)
 }
 
 func (s *ContentStorer) Get(slug string) (*Content, error) {
+	s.RLock()
+	defer s.RUnlock()
 	if c, ok := s.contentMap[slug]; ok {
 		return c, nil
 	}
@@ -80,10 +99,14 @@ func (s *ContentStorer) Get(slug string) (*Content, error) {
 }
 
 func (s *ContentStorer) ListAll() ([]*Content, error) {
+	s.RLock()
+	defer s.RUnlock()
 	return append(s.contents, s.pages...), nil
 }
 
 func (s *ContentStorer) GetImage(name string) ([]byte, error) {
+	s.RLock()
+	defer s.RUnlock()
 	if c, ok := s.imageMap[name]; ok {
 		return s.embeddedFiles.ReadFile(c)
 	}

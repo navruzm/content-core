@@ -15,6 +15,9 @@ import (
 )
 
 func (s *ContentStorer) GenerateDatastore(embeddedFiles embed.FS) error {
+	s.Lock()
+	defer s.Unlock()
+	tn := time.Now()
 	markdown := goldmark.New(
 		goldmark.WithExtensions(
 			meta.Meta,
@@ -56,6 +59,9 @@ func (s *ContentStorer) GenerateDatastore(embeddedFiles embed.FS) error {
 			UpdatedAt:       getMetaAsTime("UpdatedAt", metaData),
 			Content:         t,
 			Slug:            getMetaAsString("Slug", metaData),
+		}
+		if tn.Before(c.CreatedAt) {
+			continue
 		}
 		if c.Slug == "" {
 			c.Slug = slug.MakeLang(c.Title, "en")
@@ -108,6 +114,9 @@ func (s *ContentStorer) GenerateDatastore(embeddedFiles embed.FS) error {
 			Content:         t,
 			Slug:            getMetaAsString("Slug", metaData),
 		}
+		if tn.Before(c.CreatedAt) {
+			continue
+		}
 		if c.Slug == "" {
 			c.Slug = slug.MakeLang(c.Title, "en")
 		}
@@ -126,7 +135,7 @@ func (s *ContentStorer) GenerateDatastore(embeddedFiles embed.FS) error {
 		}
 	}
 	sort.Slice(s.contents, func(i, j int) bool {
-		return s.contents[i].UpdatedAt.Before(s.contents[j].UpdatedAt)
+		return s.contents[i].UpdatedAt.After(s.contents[j].UpdatedAt)
 	})
 	return nil
 }
