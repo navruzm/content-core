@@ -17,6 +17,7 @@ import (
 func (s *ContentStorer) GenerateDatastore(embeddedFiles embed.FS) error {
 	s.Lock()
 	defer s.Unlock()
+	s.contents = nil
 	tn := time.Now()
 	markdown := goldmark.New(
 		goldmark.WithExtensions(
