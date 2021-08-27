@@ -3,7 +3,7 @@ package app
 import (
 	"net/http"
 
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"github.com/navruzm/content-core/datastore"
 	"github.com/navruzm/content-core/template"
 	log "github.com/sirupsen/logrus"
