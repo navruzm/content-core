@@ -3,5 +3,5 @@
 
 
 
-}());
+})();
 //# sourceMappingURL=bundle.js.map
