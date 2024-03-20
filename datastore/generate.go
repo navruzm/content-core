@@ -8,6 +8,7 @@ import (
 
 	"github.com/gosimple/slug"
 	"github.com/navruzm/content-core/template"
+	log "github.com/sirupsen/logrus"
 	"github.com/yuin/goldmark"
 	meta "github.com/yuin/goldmark-meta"
 	"github.com/yuin/goldmark/parser"
@@ -35,7 +36,7 @@ func (s *ContentStorer) GenerateDatastore(embeddedFiles embed.FS) error {
 
 	files, err := embeddedFiles.ReadDir("posts")
 	if err != nil {
-		return err
+		log.Errorf("err: %s\n", err)
 	}
 	for _, f := range files {
 		content, err := embeddedFiles.ReadFile("posts/" + f.Name() + "/data.md")
@@ -85,6 +86,9 @@ func (s *ContentStorer) GenerateDatastore(embeddedFiles embed.FS) error {
 
 		s.contents = append(s.contents, c)
 		s.contentMap[c.Slug] = c
+		sort.Slice(s.contents, func(i, j int) bool {
+			return s.contents[i].UpdatedAt.After(s.contents[j].UpdatedAt)
+		})
 	}
 
 	files, err = embeddedFiles.ReadDir("pages")
@@ -135,9 +139,6 @@ func (s *ContentStorer) GenerateDatastore(embeddedFiles embed.FS) error {
 			}
 		}
 	}
-	sort.Slice(s.contents, func(i, j int) bool {
-		return s.contents[i].UpdatedAt.After(s.contents[j].UpdatedAt)
-	})
 	return nil
 }
 
