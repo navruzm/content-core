@@ -66,7 +66,7 @@ func (a *App) router() *chi.Mux {
 	})
 	r.HandleFunc("/robots.txt", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/plain")
-		w.Write([]byte(fmt.Sprintf("User-agent: *\nAllow: /\nSitemap: https://%s/sitemap.xml", a.Domain)))
+		fmt.Fprintf(w, "User-agent: *\nAllow: /\nSitemap: https://%s/sitemap.xml", a.Domain)
 	})
 	r.HandleFunc("/ads.txt", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/plain")

@@ -1,10 +1,10 @@
-{{define "title"}}{{$.Content.MetaTitle}}{{ if ne $.PageNumber 1 }} - Page {{$.PageNumber}}{{end}}{{end}}
-{{define "description"}}{{$.Content.MetaDescription}}{{ if ne $.PageNumber 1 }} - Page {{$.PageNumber}}{{end}}{{end}}
-{{define "meta"}}{{end}}
-{{define "body"}}
-{{with .Contents}}
+{{- define "title"}}{{$.Content.MetaTitle}}{{ if ne $.PageNumber 1 }} - Page {{$.PageNumber}}{{end}}{{end}}
+{{- define "description"}}{{$.Content.MetaDescription}}{{ if ne $.PageNumber 1 }} - Page {{$.PageNumber}}{{end}}{{end}}
+{{- define "meta"}}{{end}}
+{{- define "body"}}
+{{- with .Contents}}
 <div class="list">
-  {{range .}}
+  {{- range .}}
   <div class="item">
     <a href="/{{.Slug}}">
       {{ .Image | thumbImage}}
@@ -12,18 +12,18 @@
     <h2><a href="/{{.Slug}}">{{.Title}}</a></h2>
     {{.MetaDescription}}
   </div>
-  {{end}}
+  {{- end}}
 </div>
 <div class="pagination">
-  {{ with $.PrevPage}}
+  {{-  with $.PrevPage}}
   <a href="/?page={{.}}" class="prev">Previous Page</a>
-  {{end}}
-  {{ with $.NextPage}}
+  {{- end}}
+  {{-  with $.NextPage}}
   <a href="/?page={{.}}" class="next">Next Page</a>
-  {{end}}
+  {{- end}}
 </div>
-{{end}}
-{{if eq .PageNumber 1}}
+{{- end}}
+{{- if eq .PageNumber 1}}
 {{.Content.Content | safeHTML}}
-{{end}}
-{{end}}
+{{- end}}
+{{- end}}

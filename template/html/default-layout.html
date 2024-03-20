@@ -1,4 +1,5 @@
-{{define "layout"}}<!DOCTYPE html>
+{{- define "layout"}}
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -8,7 +9,8 @@
   <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=">
   <style>{{.MainCSS}}</style>
   {{template "meta" .}}
-  {{with .App.AdID}}<link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  {{- with .App.AdID}}
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
   <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net">
   <link rel="dns-prefetch" href="https://doubleclickbygoogle.com">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -17,8 +19,9 @@
             google_ad_client: "{{.}}",
             enable_page_level_ads: true
       });
-  </script>{{end}}
-  {{with .App.AnalyticsID}}<script async defer data-domain="{{.}}" src="https://plausible.io/js/plausible.js"></script>{{end}}
+  </script>
+  {{- end}}
+  {{with .App.AnalyticsID}}<script defer src="https://eu.umami.is/script.js" data-website-id="{{.}}"></script>{{end}}
 </head>
 <body>
   <header>
@@ -34,4 +37,4 @@
   </footer>
 </body>
 </html>
-{{end}}
+{{- end}}

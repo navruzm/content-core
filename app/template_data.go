@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-func generateTemplateData(r *http.Request) (data templateData) {
+func generateTemplateData(_ *http.Request) (data templateData) {
 	data = templateData{app}
 	return
 }
