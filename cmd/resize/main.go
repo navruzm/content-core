@@ -29,7 +29,7 @@ func main() {
 					return err
 				}
 				options := bimg.Options{}
-				size, err := bimg.NewImage(buffer).Size()
+				size, _ := bimg.NewImage(buffer).Size()
 				if size.Width > 1024 {
 					ratio := float64(size.Width) / float64(size.Height)
 					if ratio < 1 {

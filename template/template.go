@@ -13,7 +13,7 @@ import (
 //go:embed dist html
 var embededFiles embed.FS
 
-//Execute parses template with provided data.
+// Execute parses template with provided data.
 func Execute(wr http.ResponseWriter, file string, layout string, data interface{}) error {
 	lp, err := embededFiles.ReadFile(fmt.Sprintf("html/%s-layout.html", layout))
 	if err != nil {
@@ -31,7 +31,7 @@ func Execute(wr http.ResponseWriter, file string, layout string, data interface{
 
 	lps := strings.Replace(string(lp), "{{.MainCSS}}", string(css), -1)
 	lps = strings.Replace(lps, "{{.MainJS}}", string(js), -1)
-	tmpl, err := template.New("layout").Funcs(tempFuncs()).Parse(lps)
+	tmpl, err := template.New("layout").Funcs(getTempFuncs()).Parse(lps)
 	if err != nil {
 		log.Printf("err: %#+v\n", err)
 	}
@@ -63,7 +63,7 @@ func Execute(wr http.ResponseWriter, file string, layout string, data interface{
 
 func ExecuteString(s string, data interface{}) (string, error) {
 	s = strings.ReplaceAll(s, "&quot;", "\"")
-	t, err := template.New("action").Funcs(tempFuncs()).Parse(s)
+	t, err := template.New("action").Funcs(getTempFuncs()).Parse(s)
 	if err != nil {
 		return "", err
 	}
@@ -72,37 +72,4 @@ func ExecuteString(s string, data interface{}) (string, error) {
 		return "", err
 	}
 	return tpl.String(), nil
-}
-
-func tempFuncs() template.FuncMap {
-	return template.FuncMap{
-		"safeHTML": func(html string) template.HTML {
-			return template.HTML(html)
-		},
-		"safeURL": func(s string) template.URL {
-			return template.URL(s)
-		},
-		"image": func(s string) template.HTML {
-			fnp := strings.Split(s, ".")
-			fp := strings.ReplaceAll(fnp[0], "-", " ")
-			fp = strings.ToTitle(fp)
-			var html = fmt.Sprintf(`<picture>
-			    <source type="image/webp" media="(min-width: 36em)" srcset="/img/large-%s?f=webp 1024w, /img/medium-%s?f=webp 640w, /img/small-%s?f=webp 320w" sizes="33.3vw" />
-			    <source type="image/webp" srcset="/img/croppedlarge-%s?f=webp 2x, /img/croppedsmall-%s?f=webp 1x" />
-			    <img loading="lazy" src="/img/small-%s" alt="%s" />
-			 </picture>`, s, s, s, s, s, s, fp)
-			return template.HTML(html)
-		},
-		"thumbImage": func(s string) template.HTML {
-			fnp := strings.Split(s, ".")
-			fp := strings.ReplaceAll(fnp[0], "-", " ")
-			fp = strings.ToTitle(fp)
-			var html = fmt.Sprintf(`<picture>
-          <source srcset="/img/smallThumb-%s?f=webp" type="image/webp">
-          <source srcset="/img/smallThumb-%s" type="image/jpeg">
-			    <img loading="lazy" src="/img/smallThumb-%s" alt="%s" />
-			 </picture>`, s, s, s, fp)
-			return template.HTML(html)
-		},
-	}
 }
