@@ -68,7 +68,7 @@ header {
   justify-content: space-between;
   align-items: center;
 
-  & > a {
+  &>a {
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0;
@@ -175,4 +175,25 @@ img {
     }
   }
 
+}
+
+.btn {
+  border: 1px solid darken($red, 10%);
+  display: inline-block;
+  padding: .5rem 1rem;
+  border-radius: .5rem;
+  background: $hover-color;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  transition: background .2s;
+
+  &:hover {
+    background: darken($hover-color, 10%);
+    color: #fff;
+  }
+}
+
+.center {
+  text-align: center;
 }
