@@ -13,8 +13,7 @@ adulterium* metum, qua terram evanida arma arcus.
 - Est rebus corpus pulveris Palladaque ad Ceyca
 - Pars ungula
 
-{{ "aditya-romansa-m6p4lqWxfy0-unsplash.jpg" | image}}
-
+{{ "aditya-romansa-m6p4lqWxfy0-unsplash.jpg" | simpleImage}}
 Quae gratissima magni Theseus: non amo, hordea amor, non novat movit origo,
 quidem sub fatentis tecta. **Vivacia Phaeocomes coniunx**? Leve cruor atque
 auxiliaris Oriente erant contegat anxia risitque. Sua corpore levemus, illa ipsa

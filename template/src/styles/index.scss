@@ -1,13 +1,13 @@
 @import 'breakpoints.scss';
 
-$text-color-dark:#2A2F36;
-$text-color:rgb(18, 20, 22);
-$hover-color:#dc5b5d;
+$text-color-dark: #2A2F36;
+$text-color: rgb(18, 20, 22);
+$hover-color: #dc5b5d;
 
-$blue:#0366d6;
-$red:#d73a49;
-$green:#28a745;
-$yellow:#ffd33d;
+$blue: #0366d6;
+$red: #d73a49;
+$green: #28a745;
+$yellow: #ffd33d;
 
 body {
   font-family: -apple-system, BlinkMacSystemFont,
@@ -95,6 +95,19 @@ main {
 .content {
   max-width: 960px;
   margin: 0 auto;
+
+  p:has(.img-left)::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+
+  .img-left {
+    float: left !important;
+    margin-right: 1rem;
+    max-width: 320px;
+  }
+
 }
 
 .pagination {

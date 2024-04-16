@@ -44,6 +44,13 @@ func getTempFuncs() template.FuncMap {
 			 </picture>`, s, s, s, fp)
 			return template.HTML(html)
 		},
+		"simpleImage": func(s string) template.HTML {
+			fnp := strings.Split(s, ".")
+			fp := strings.ReplaceAll(fnp[0], "-", " ")
+			fp = strings.ToTitle(fp)
+			var html = fmt.Sprintf(`<img loading="lazy" src="/img/%s" alt="%s" class="img-left" />`, s, fp)
+			return template.HTML(html)
+		},
 	}
 	for name, f := range tempFuncs {
 		funcs[name] = f

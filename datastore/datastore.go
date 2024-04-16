@@ -95,7 +95,7 @@ func (s *ContentStorer) Get(slug string) (*Content, error) {
 	if c, ok := s.pageMap[slug]; ok {
 		return c, nil
 	}
-	return nil, errors.New("not found")
+	return nil, errors.New("content not found")
 }
 
 func (s *ContentStorer) ListAll() ([]*Content, error) {
@@ -110,5 +110,5 @@ func (s *ContentStorer) GetImage(name string) ([]byte, error) {
 	if c, ok := s.imageMap[name]; ok {
 		return s.embeddedFiles.ReadFile(c)
 	}
-	return nil, errors.New("not found")
+	return nil, errors.New("image not found")
 }

@@ -11,7 +11,7 @@ export default {
   output: {
     file: 'template/dist/bundle.js',
     format: 'iife', // immediately-invoked function expression — suitable for <script> tags
-    sourcemap: true
+    sourcemap: !production
   },
   plugins: [
     resolve(), // tells Rollup how to find date-fns in node_modules
@@ -19,7 +19,7 @@ export default {
     production && terser(), // minify, but only in production
     postcss({
       extract: true,
-      minimize: true,
+      minimize: production,
       plugins: []
     })
   ]
