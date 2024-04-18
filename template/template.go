@@ -29,8 +29,8 @@ func Execute(wr http.ResponseWriter, file string, layout string, data interface{
 		log.Printf("err: %#+v\n", err)
 	}
 
-	lps := strings.Replace(string(lp), "{{.MainCSS}}", string(css)+additionalStyles, -1)
-	lps = strings.Replace(lps, "{{.MainJS}}", string(js), -1)
+	lps := strings.Replace(string(lp), "{{.MainCSS}}", string(css)+additionalStyles, 1)
+	lps = strings.Replace(lps, "{{.MainJS}}", string(js), 1)
 	tmpl, err := template.New("layout").Funcs(getTempFuncs()).Parse(lps)
 	if err != nil {
 		log.Printf("err: %#+v\n", err)

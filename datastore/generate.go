@@ -41,7 +41,8 @@ func (s *ContentStorer) GenerateDatastore(embeddedFiles embed.FS) error {
 	for _, f := range files {
 		content, err := embeddedFiles.ReadFile("posts/" + f.Name() + "/data.md")
 		if err != nil {
-			return err
+			log.Errorf("data.md is not found in %q, ignoring\n", f.Name())
+			continue
 		}
 		var buf bytes.Buffer
 		context := parser.NewContext()
@@ -75,8 +76,7 @@ func (s *ContentStorer) GenerateDatastore(embeddedFiles embed.FS) error {
 			return err
 		}
 		for _, fnm := range files {
-			fn := fnm.Name()
-			if fn != "data.md" {
+			if fn := fnm.Name(); fn != "data.md" {
 				s.imageMap[fn] = "posts/" + f.Name() + "/" + fn
 				if c.Image == "" {
 					c.Image = fn
@@ -98,7 +98,8 @@ func (s *ContentStorer) GenerateDatastore(embeddedFiles embed.FS) error {
 	for _, f := range files {
 		content, err := embeddedFiles.ReadFile("pages/" + f.Name() + "/data.md")
 		if err != nil {
-			return err
+			log.Errorf("data.md is not found in %q, ignoring\n", f.Name())
+			continue
 		}
 		var buf bytes.Buffer
 		context := parser.NewContext()

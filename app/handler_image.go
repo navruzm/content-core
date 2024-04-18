@@ -25,20 +25,34 @@ func getImage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if typ != "" {
+		size, _ := bimg.NewImage(imgB).Size()
+		ratio := float64(size.Width) / float64(size.Height)
 		options := bimg.Options{
-			Width:   1024,
-			Height:  768,
-			Quality: 70,
+			Width:   size.Width,
+			Height:  size.Height,
+			Quality: 80,
 		}
 		switch typ {
-		case "medium":
-			options.Width = 640
-			options.Height = 480
-			options.Enlarge = true
+		case "large", "medium":
+			if ratio < 1 {
+				width := int(float64(480) * ratio)
+				options.Height = 480
+				options.Width = width
+			} else {
+				height := int(float64(640) / ratio)
+				options.Width = 640
+				options.Height = height
+			}
 		case "small":
-			options.Width = 320
-			options.Height = 240
-			options.Enlarge = true
+			if ratio < 1 {
+				width := int(float64(320) * ratio)
+				options.Height = 320
+				options.Width = width
+			} else {
+				height := int(float64(240) / ratio)
+				options.Width = 240
+				options.Height = height
+			}
 		case "smallThumb":
 			options.Width = 320
 			options.Height = 240
@@ -56,18 +70,16 @@ func getImage(w http.ResponseWriter, r *http.Request) {
 			options.Gravity = bimg.GravitySmart
 		}
 
+		if format == "webp" {
+			options.Type = bimg.WEBP
+			w.Header().Add("Content-Type", "image/webp")
+		}
+
 		imgB, err = bimg.NewImage(imgB).Process(options)
 		if err != nil {
 			log.Error(err)
 			notFoundHandler(w, r)
 			return
-		}
-		if format == "webp" {
-			imgB, err = bimg.NewImage(imgB).Convert(bimg.WEBP)
-			if err != nil {
-				log.Error(err)
-			}
-			w.Header().Add("Content-Type", "image/webp")
 		}
 	}
 	w.Header().Add("Cache-Control", "max-age=31536000")
